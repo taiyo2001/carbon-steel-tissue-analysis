@@ -1,0 +1,10 @@
+version: '1.0'
+services:
+  python3:
+    restart: always
+    build: .
+    container_name: 'deep-learning-python'
+    working_dir: '/root/'
+    tty: true
+    volumes:
+      - .:/root
