@@ -1,8 +1,12 @@
+# /data/img
+# /data/model
 /log/*
 /tmp/*
-/data/img
-/data/model
 /memo/
+
+/data/**
+!/data/**/
+!/data/**/.gitkeep
 
 # kaggle sample data
 /stage1_train
