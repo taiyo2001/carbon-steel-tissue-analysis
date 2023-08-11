@@ -1,0 +1,23 @@
+# result(result sample fileは追跡対象)
+/result/
+!/result/unet_command_result.nbconvert.ipynb
+/data/img/**
+!/data/**/.gitignore
+# !.gitkeep
+# !/data/**/.gitkeep
+
+
+# cache
+.cache
+.config
+.ipython
+.python_history
+.bash_history
+.jupyter
+.nv
+tmp
+__pycache__
+
+
+# test file
+test.*
