@@ -1,0 +1,12 @@
+# jupyterコマンドを使う
+notebook
+
+numpy
+torch
+torchvision
+scikit-image        # skimage
+pillow              # PIL
+matplotlib
+albumentations
+tqdm
+seaborn
