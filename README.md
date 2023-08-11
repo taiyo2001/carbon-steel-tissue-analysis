@@ -10,28 +10,28 @@
 
 .
 ├── 🗁 app
-│   ├── ![SVG Icon](python.svg) unet_colab.ipynb
-│   └── ![SVG Icon](python.svg) unet_command.ipynb
+│   ├── ![SVG Icon](/readme_svg/python.svg) unet_colab.ipynb
+│   └── ![SVG Icon](/readme_svg/python.svg) unet_command.ipynb
 ├── 🗁 result
 │   └── unet_command_result.nbconvert.ipynb
 ├── 🗁 bin
-│   └── ![SVG Icon](python.svg) setup.py
+│   └── ![SVG Icon](/readme_svg/python.svg) setup.py
 ├── 🗁 config
-│   ├── ![SVG Icon](python.svg) \_\_init__.py
-│   └── ![SVG Icon](python.svg) setting.py
+│   ├── ![SVG Icon](/readme_svg/python.svg) \_\_init__.py
+│   └── ![SVG Icon](/readme_svg/python.svg) setting.py
 ├── 🗁 data
 │   └── 🗁 model
 │       ├── 🗁 SegNet
 │       └── 🗁 UNet
 ├── 🗁 module
-│   ├── ![SVG Icon](python.svg) const.py
-│   ├── ![SVG Icon](python.svg) image_loader.py
-│   └── ![SVG Icon](python.svg) \_\_init__.py
-├── ![SVG Icon](docker.svg) Dockerfile
-├──![SVG Icon](md_file.svg)README.md
-├── ![SVG Icon](text.svg) requirements.txt
-├── ![SVG Icon](terminal_shell.svg) exec_ipynb.sh
-└── ![SVG Icon](terminal_shell.svg) setup.sh
+│   ├── ![SVG Icon](/readme_svg/python.svg) const.py
+│   ├── ![SVG Icon](/readme_svg/python.svg) image_loader.py
+│   └── ![SVG Icon](/readme_svg/python.svg) \_\_init__.py
+├── ![SVG Icon](/readme_svg/docker.svg) Dockerfile
+├──![SVG Icon](/readme_svg/md_file.svg)README.md
+├── ![SVG Icon](/readme_svg/text.svg) requirements.txt
+├── ![SVG Icon](/readme_svg/terminal_shell.svg) exec_ipynb.sh
+└── ![SVG Icon](/readme_svg/terminal_shell.svg) setup.sh
 </pre>
 9 directories, 14 files
 
@@ -42,13 +42,13 @@
 
 `/data`直下に以下のような構造でimgディレクトリを用意する
 <pre>
-├── data
-│   ├── img
-│   │   ├── images ─...
-│   │   └── masks  ─...
-│   └─── model
-│       ├── SegNet
-│       └── UNet
+├── 🗁 data
+│   ├── 🗁 img
+│   │   ├── 🗁 images ─...
+│   │   └── 🗁 masks  ─...
+│   └─── 🗁 model
+│       ├── 🗁 SegNet
+│       └── 🗁 UNet
 </pre>
 
 Build
