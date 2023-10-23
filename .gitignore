@@ -1,7 +1,7 @@
 # result(result sample fileは追跡対象)
 /result/
 !/result/unet_command_result.nbconvert.ipynb
-/data/img/**
+/data/img*/**
 !/data/**/.gitignore
 # !.gitkeep
 # !/data/**/.gitkeep
