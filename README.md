@@ -43,7 +43,7 @@
 `/data`直下に以下のような構造でimgディレクトリを用意する
 <pre>
 ├── 🗁 data
-│   ├── 🗁 img
+│   ├── 🗁 img(config/setting.pyに記述したディレクトリ名)
 │   │   ├── 🗁 images ─...
 │   │   └── 🗁 masks  ─...
 │   └─── 🗁 model
@@ -61,7 +61,7 @@ docker build -t [name] .
 docker start [name]
 docker container exec -it [name] bash
 cd /root
-source setup.sh
+source bin/setup.sh
 ```
 
 終了
@@ -74,10 +74,11 @@ docker stop [name]
 `.tool_versions`でpythonのバージョンを確認し、各自で構築.
 
 ## shによるJupyter Notebookの実行方法
-`/app`内のJupyter Notebookを実行するときは、APP_PATHで以下を叩くと実行結果ファイル`/result/${file name}_epoch_${epochs}.nbconvert.ipynb`が出力される.
+`/app`内のJupyter Notebookを実行するときは、APP_PATHで以下を叩くと実行結果ファイル`/result/${file_name}_epoch_${epochs}.nbconvert.ipynb`が出力される.
 ```
-sh exec_ipynb.sh ${file name} ${epochs}
+sh exec_ipynb.sh ${file_name} ${epochs}
 ```
+※第2引数は省略可
 
 ex. 300epochs分を回す`/app/unet_command.ipynb`を実行するとき
 
