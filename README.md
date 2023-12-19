@@ -73,10 +73,10 @@ docker stop [name]
 ### Local
 `.tool_versions`でpythonのバージョンを確認し、各自で構築.
 
-## shによるJupyter Notebookの実行方法
+## Jupyter Notebookの実行方法
 `/app`内のJupyter Notebookを実行するときは、APP_PATHで以下を叩くと実行結果ファイル`/result/${file_name}_epoch_${epochs}.nbconvert.ipynb`が出力される.
 ```
-sh exec_ipynb.sh ${file_name} ${epochs}
+ipynb ${file_name} ${epochs}
 ```
 ※第2引数は省略可
 
@@ -84,6 +84,6 @@ ex. 300epochs分を回す`/app/unet_command.ipynb`を実行するとき
 
 実行コマンド
 ```
-sh exec_ipynb.sh unet_command 300
+ipynb unet_command 300
 ```
 出力ファイル：`/result/unet_command_epoch_300.nbconvert.ipynb`
