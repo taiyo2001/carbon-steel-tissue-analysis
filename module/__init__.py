@@ -1,1 +1,1 @@
-print("/moduleがパッケージとして初期化されました")
+print("module directory has been initialized as a package")

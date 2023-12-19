@@ -4,4 +4,4 @@
 
 ## TODO
 
-## 補足
+## CAPTURE
