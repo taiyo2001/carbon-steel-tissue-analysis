@@ -11,5 +11,7 @@ class _const(object):
             raise self.ConstError(name)
         self.__dict__[name] = value
 
+
 import sys
+
 sys.modules[__name__] = _const()

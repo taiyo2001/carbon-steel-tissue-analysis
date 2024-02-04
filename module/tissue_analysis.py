@@ -78,8 +78,12 @@ def exec_ferrite_analysis(ferrite_image: np.ndarray, expansion: Union[None, int]
 
 
     # 輪郭を検出
-    contours, _ = cv2.findContours(binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    contours, hierarchy = cv2.findContours(binary_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(
+        binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+    )
+    contours, hierarchy = cv2.findContours(
+        binary_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
+    )
     # 輪郭の個数
     contour_count = len(contours)
 
@@ -116,13 +120,23 @@ def exec_ferrite_analysis(ferrite_image: np.ndarray, expansion: Union[None, int]
 
         plt.subplot(num_rows, num_columns, i + 1)
         plt.imshow(result_image)
-        plt.axis('off')
-        plt.title(f'Contour {i+1}')
+        plt.axis("off")
+        plt.title(f"Contour {i+1}")
 
         # 各輪郭を描画（白色で塗りつぶす）
-        cv2.drawContours(result_image, [contour], -1, (255, 255, 255), thickness=cv2.FILLED)
+        cv2.drawContours(
+            result_image, [contour], -1, (255, 255, 255), thickness=cv2.FILLED
+        )
         # 番号を輪郭の中心に配置
-        cv2.putText(result_image, str(i+1), (cX, cY), font, font_scale, font_color, font_thickness)
+        cv2.putText(
+            result_image,
+            str(i + 1),
+            (cX, cY),
+            font,
+            font_scale,
+            font_color,
+            font_thickness,
+        )
 
     plt.tight_layout()
     plt.show()
@@ -131,10 +145,10 @@ def exec_ferrite_analysis(ferrite_image: np.ndarray, expansion: Union[None, int]
     for area in contour_areas:
         sum_areas += area
 
-    print(f'輪郭の個数: {contour_count}')
-    print(f'各輪郭の周の長さ: {contour_lengths}')
-    print(f'各輪郭の面積: {contour_areas}')
-    print(f'各輪郭の面積(合計): {sum_areas}')
+    print(f"輪郭の個数: {contour_count}")
+    print(f"各輪郭の周の長さ: {contour_lengths}")
+    print(f"各輪郭の面積: {contour_areas}")
+    print(f"各輪郭の面積(合計): {sum_areas}")
 
     plt.figure(figsize=(12, 12))
     plt.imshow(result_image)
@@ -169,18 +183,26 @@ def exec_perlite_analysis(perlite_image: np.ndarray) -> None:
 
     # 面積が閾値未満の輪郭を削除
     min_contour_area = 3
-    filtered_contours = [contour for contour in contours if cv2.contourArea(contour) >= min_contour_area]
+    filtered_contours = [
+        contour for contour in contours if cv2.contourArea(contour) >= min_contour_area
+    ]
 
     # filtered_contours後画像
     filtered_contours_image = np.zeros_like(perlite_image)
-    cv2.drawContours(filtered_contours_image, filtered_contours, -1, 255, thickness=cv2.FILLED)
+    cv2.drawContours(
+        filtered_contours_image, filtered_contours, -1, 255, thickness=cv2.FILLED
+    )
 
-    _, filtered_contours_image = cv2.threshold(filtered_contours_image, 128, 255, cv2.THRESH_BINARY)
+    _, filtered_contours_image = cv2.threshold(
+        filtered_contours_image, 128, 255, cv2.THRESH_BINARY
+    )
 
     # 輪郭の個数
     contour_count = len(filtered_contours)
     # 各輪郭の周の長さと面積を取得
-    contour_lengths = [cv2.arcLength(contour, closed=True) for contour in filtered_contours]
+    contour_lengths = [
+        cv2.arcLength(contour, closed=True) for contour in filtered_contours
+    ]
     contour_areas = [cv2.contourArea(contour) for contour in filtered_contours]
     # 結果を描画
     result_image = np.zeros_like(perlite_image)
@@ -201,16 +223,24 @@ def exec_perlite_analysis(perlite_image: np.ndarray) -> None:
             cX, cY = 0, 0
 
         # 番号を輪郭の中心に配置
-        cv2.putText(result_image, str(i+1), (cX, cY), font, font_scale, font_color, font_thickness)
+        cv2.putText(
+            result_image,
+            str(i + 1),
+            (cX, cY),
+            font,
+            font_scale,
+            font_color,
+            font_thickness,
+        )
 
     sum_areas = 0
     for area in contour_areas:
         sum_areas += area
 
-    print(f'輪郭の個数: {contour_count}')
-    print(f'各輪郭の周の長さ: {contour_lengths}')
-    print(f'各輪郭の面積: {contour_areas}')
-    print(f'各輪郭の面積(合計): {sum_areas}')
+    print(f"輪郭の個数: {contour_count}")
+    print(f"各輪郭の周の長さ: {contour_lengths}")
+    print(f"各輪郭の面積: {contour_areas}")
+    print(f"各輪郭の面積(合計): {sum_areas}")
 
     plt.figure(figsize=(10, 10))
     plt.imshow(result_image)
