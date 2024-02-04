@@ -11,3 +11,5 @@ albumentations
 tqdm
 seaborn
 opencv-python
+
+black[jupyter]
