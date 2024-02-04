@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import Union
 
+
 def display_input_label_pre_image(input, label, predicted, name):
     """
     画像解析結果を表示.
@@ -37,7 +38,9 @@ def display_input_label_pre_image(input, label, predicted, name):
     plt.show()
 
 
-def exec_ferrite_analysis(ferrite_image: np.ndarray, expansion: Union[None, int] = None) -> None:
+def exec_ferrite_analysis(
+    ferrite_image: np.ndarray, expansion: Union[None, int] = None
+) -> None:
     """
     フェライトの画像解析を実行.
 
@@ -56,7 +59,7 @@ def exec_ferrite_analysis(ferrite_image: np.ndarray, expansion: Union[None, int]
     _, binary_image = cv2.threshold(gray_ferrite_image, 128, 255, cv2.THRESH_BINARY)
 
     if expansion is not None and isinstance(expansion, int):
-        print('exec expansion')
+        print("exec expansion")
         binary_image = cv2.bitwise_not(binary_image)
 
         kernel = np.ones((expansion, expansion), np.uint8)
@@ -75,7 +78,6 @@ def exec_ferrite_analysis(ferrite_image: np.ndarray, expansion: Union[None, int]
 
         eroded_image = cv2.bitwise_not(eroded_image)
         _, binary_image = cv2.threshold(eroded_image, 128, 255, cv2.THRESH_BINARY)
-
 
     # 輪郭を検出
     contours, _ = cv2.findContours(
@@ -179,7 +181,9 @@ def exec_perlite_analysis(perlite_image: np.ndarray) -> None:
     _, eroded_image = cv2.threshold(eroded_image, 200, 255, cv2.THRESH_BINARY)
 
     # 輪郭を検出
-    contours, hierarchy = cv2.findContours(eroded_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(
+        eroded_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
+    )
 
     # 面積が閾値未満の輪郭を削除
     min_contour_area = 3
