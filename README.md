@@ -87,3 +87,14 @@ ex. 300epochs分を回す`/app/unet_command.ipynb`を実行するとき
 ipynb unet_command 300
 ```
 出力ファイル：`/result/unet_command_epoch_300.nbconvert.ipynb`
+
+## フォーマットの実行方法
+フォーマットチェック
+```
+black ./ --check
+```
+
+フォーマット実行
+```
+black ./
+```
