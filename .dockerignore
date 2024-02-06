@@ -1,0 +1,13 @@
+# cache
+.cache
+.config
+.ipython
+.python_history
+.bash_history
+.jupyter
+.nv
+tmp
+__pycache__
+
+# result
+/result/
