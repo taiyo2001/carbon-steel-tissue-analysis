@@ -1,5 +1,6 @@
-# jupyterコマンドを使う
 notebook
+black[jupyter]
+pipreqs
 
 numpy
 torch
@@ -11,5 +12,3 @@ albumentations
 tqdm
 seaborn
 opencv-python
-
-black[jupyter]
