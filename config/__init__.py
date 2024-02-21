@@ -1,1 +1,1 @@
-print("/configがパッケージとして初期化されました")
+print("config directory has been initialized as a package")
