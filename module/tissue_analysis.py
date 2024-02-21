@@ -3,21 +3,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import Union
 
-
-def display_input_label_pre_image(input, label, predicted, name):
+def display_input_label_pre_image(input: np.ndarray, label: np.ndarray, predicted: np.ndarray, name: str) -> None:
     """
-    画像解析結果を表示.
+    Display image analysis results.
 
     Parameters:
-    - input (numpy.ndarray): 解析対象の入力画像 (BGR カラー形式).
-    - label (numpy.ndarray): ラベル画像 (BGR カラー形式).
-    - predicted (numpy.ndarray): 予測画像 (BGR カラー形式).
-    - name (str): 画像に関する名前や識別子.
+    - input (numpy.ndarray): Input image for analysis (in BGR color format).
+    - label (numpy.ndarray): Label image (in BGR color format).
+    - predicted (numpy.ndarray): Predicted image (in BGR color format).
+    - name (str): Name or identifier related to the image.
 
     Returns:
     None
 
-    画像解析の結果を入力画像、ラベル画像、予測画像の形で横に並べて表示.
+    Display the results of image analysis by arranging the input image, label image, and predicted image side by side.
     """
     gray_label = cv2.cvtColor(label, cv2.COLOR_BGR2GRAY)
     gray_predicted = cv2.cvtColor(predicted, cv2.COLOR_BGR2GRAY)
@@ -42,16 +41,16 @@ def exec_ferrite_analysis(
     ferrite_image: np.ndarray, expansion: Union[None, int] = None
 ) -> None:
     """
-    フェライトの画像解析を実行.
+    Execute ferrite image analysis.
 
     Parameters:
-    - ferrite_image (numpy.ndarray): 解析対象のフェライト画像. BGR カラー形式.
-    - expansion (None | int, optional): 輪郭拡張を行うかどうかを指定するフラグ. デフォルトは None. integerのときはkernelの大きさ.
+    - ferrite_image (numpy.ndarray): Ferrite image to be analyzed. BGR color format.
+    - expansion (None | int, optional): Flag specifying whether to perform contour expansion. Default is None. When it's an integer, it represents the size of the kernel.
 
     Returns:
     None
 
-    解析結果はプロットされ、コンソールに輪郭の情報が表示.
+    The analysis results are plotted, and contour information is displayed in the console.
     """
     gray_ferrite_image = cv2.cvtColor(ferrite_image, cv2.COLOR_BGR2GRAY)
 
@@ -159,15 +158,15 @@ def exec_ferrite_analysis(
 
 def exec_perlite_analysis(perlite_image: np.ndarray) -> None:
     """
-    パーライトの画像解析を実行.
+    Execute perlite image analysis.
 
     Parameters:
-    - perlite_image (numpy.ndarray): 解析対象のパーライト画像. BGR カラー形式.
+    - perlite_image (numpy.ndarray): Perlite image to be analyzed. BGR color format.
 
     Returns:
     None
 
-    解析結果はコンソールに輪郭の情報が表示され、プロットされた画像が表示.
+    The analysis results are displayed in the console with contour information, and the plotted image is shown.
     """
     gray_perlite_image = cv2.cvtColor(perlite_image, cv2.COLOR_BGR2GRAY)
 

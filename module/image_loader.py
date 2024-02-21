@@ -1,17 +1,36 @@
 import os
 
-from skimage import io, transform  # scikit-image
+from skimage import io, transform
 from PIL import Image
 import numpy as np
-from torch.utils.data import Dataset, DataLoader, random_split
+from torch.utils.data import Dataset
 import albumentations as alb
-from albumentations.pytorch import ToTensorV2
+from typing import Optional, Tuple
 
-
-# 画像データ拡張の関数
 def get_train_transform(
-    image_height, image_width, horizontal_flip=0.25, vertical_flip=0.25
-):
+    image_height: int, image_width: int, horizontal_flip: float = 0.25, vertical_flip: float = 0.25
+) -> alb.Compose:
+    """
+    Returns the image data augmentation transformation for training.
+
+    Parameters:
+    - image_height (int): Height of the resized image.
+    - image_width (int): Width of the resized image.
+    - horizontal_flip (float): Probability of horizontal flipping (default is 0.25).
+    - vertical_flip (float): Probability of vertical flipping (default is 0.25).
+
+    Returns:
+    alb.Compose: Augmentation pipeline for training data.
+
+    This function returns an augmentation pipeline using Albumentations library.
+    The pipeline consists of the following transformations:
+    - Resize the image to the specified height and width.
+    - Normalize the image with mean (0.485, 0.456, 0.406) and standard deviation (0.229, 0.224, 0.225).
+    - Apply horizontal flipping with the given probability.
+    - Apply vertical flipping with the given probability.
+    - Convert the image to PyTorch tensor format.
+    """
+
     return alb.Compose(
         [
             # リサイズ(元画像ですでにしているが)
@@ -22,14 +41,33 @@ def get_train_transform(
             alb.HorizontalFlip(p=horizontal_flip),
             # 垂直フリップ
             alb.VerticalFlip(p=vertical_flip),
-            ToTensorV2(),
+            alb.pytorch.ToTensorV2(),
         ]
     )
 
-
-# Datasetクラスの定義
 class LoadDataSet(Dataset):
-    def __init__(self, path, image_height, image_width, transform=None):
+    """
+    Dataset class for loading images and masks.
+
+    Parameters:
+    - path (str): Path to the dataset folder.
+    - image_height (int): Height of the resized image.
+    - image_width (int): Width of the resized image.
+    - transform (optional): Image transformation pipeline (default is None).
+
+    Returns:
+    Tuple[np.ndarray, np.ndarray]: Tuple containing the image and its corresponding mask.
+
+    This class loads images and masks from the specified dataset folder.
+    """
+
+    def __init__(
+        self,
+        path: str,
+        image_height: int,
+        image_width: int,
+        transform: Optional[callable] = None
+    ) -> None:
         self.path = path
         folders = os.listdir(path)
         self.folders = sorted(folders, key=lambda x: tuple(map(int, x.split("-"))))
@@ -37,31 +75,29 @@ class LoadDataSet(Dataset):
         self.image_width = image_width
         self.transforms = transform  # get_train_transform(256, 256)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.folders)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: int) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Get the image and mask at the specified index.
+
+        Parameters:
+        - idx (int): Index of the data item.
+
+        Returns:
+        Tuple[np.ndarray, np.ndarray]: Tuple containing the image and its corresponding mask.
+        """
         image_folder = os.path.join(self.path, self.folders[idx], "images/")
         mask_folder = os.path.join(self.path, self.folders[idx], "masks/")
         image_path = os.path.join(image_folder, os.listdir(image_folder)[0])
 
-        # debug
-        # print(f'image_folder: {image_folder}')
-        # print(f'mask_folder: {mask_folder}')
-        # print(f'image_path: {image_path}')
-        # print(f'mask_path: {mask_path}')
-
-        # 画像データの取得
-        # img = io.imread(image_path)[:,:,:3].astype('float32')
         img = io.imread(image_path)
-        # TODO: 正答率がでたら比較としてfloat32でも試してみる
         img = self.conv_2D_to_3Darray(img)
 
-        # maskの量が2つ以上になったらここの関数を実行してすべてを得る
-        # mask = self.get_mask(mask_folder, 256, 256).astype('float32')
         mask = self.get_mask(
             mask_folder, self.image_height, self.image_width
-        )  # nint8でOK?
+        )
 
         # 前処理をするためにひとつにまとめる
         augmented = self.transforms(image=img, mask=mask)
@@ -69,30 +105,55 @@ class LoadDataSet(Dataset):
         mask = augmented["mask"]
         return (img, mask)
 
-    def conv_2D_to_3Darray(self, arr):
+    def conv_2D_to_3Darray(self, arr: np.ndarray) -> np.ndarray:
+        """
+        Convert 2D array to 3D array.
+
+        Parameters:
+        - arr (np.ndarray): Input 2D array.
+
+        Returns:
+        np.ndarray: Converted 3D array.
+        """
         image = Image.fromarray(arr)
         image = image.convert("RGB")
-        # 変換するならここでfloat32にする
         arr = np.asarray(image, np.uint8)
         return arr
 
-    def conv_3D_to_2Darray(self, arr):
+    def conv_3D_to_2Darray(self, arr: np.ndarray) -> np.ndarray:
+        """
+        Convert 3D array to 2D array.
+
+        Parameters:
+        - arr (np.ndarray): Input 3D array.
+
+        Returns:
+        np.ndarray: Converted 2D array.
+        """
         image = Image.fromarray(arr)
         image = image.convert("L")
-        arr = np.asarray(image, np.uint8)  # 変換するならここでfloat32にする
+        arr = np.asarray(image, np.uint8)
         return arr
 
-    # マスクデータの取得
-    def get_mask(self, mask_folder, IMG_HEIGHT, IMG_WIDTH):
+    def get_mask(self, mask_folder: str, IMG_HEIGHT: int, IMG_WIDTH: int) -> np.ndarray:
+        """
+        Get the mask data.
+
+        Parameters:
+        - mask_folder (str): Path to the mask folder.
+        - IMG_HEIGHT (int): Height of the image.
+        - IMG_WIDTH (int): Width of the image.
+
+        Returns:
+        np.ndarray: Mask data.
+        """
         mask = np.zeros((IMG_HEIGHT, IMG_WIDTH, 1), dtype=bool)
         # print(f'len(os.listdir(mask_folder)): {len(os.listdir(mask_folder))}')
         for mask_ in os.listdir(mask_folder):
             mask_ = io.imread(os.path.join(mask_folder, mask_))
-            # RGBからLへ
             mask_ = self.conv_3D_to_2Darray(mask_)
             mask_ = transform.resize(mask_, (IMG_HEIGHT, IMG_WIDTH))
             mask_ = np.expand_dims(mask_, axis=-1)
-            # mask = np.maximum(mask, mask_)
             mask = mask_
 
         return mask
