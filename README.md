@@ -9,37 +9,54 @@ Analysis of ferrite-pearlite microstructure using deep learning segmentation
 
 .
 ├── 🗁 app
+│   ├── 🗁 services
+│   │   ├── ![SVG Icon](/readme_svg/python.svg) create_mask_image.ipynb
+│   │   ├── ![SVG Icon](/readme_svg/python.svg) image_analysis.ipynb
+│   │   ├── ![SVG Icon](/readme_svg/python.svg) image_analysis_confirm.ipynb
+│   │   └── ![SVG Icon](/readme_svg/python.svg) rough_and_fine_image_analysis.ipynb
 │   ├── ![SVG Icon](/readme_svg/python.svg) unet_colab.ipynb
 │   └── ![SVG Icon](/readme_svg/python.svg) unet_command.ipynb
-├── 🗁 result
-│   └── unet_command_result.nbconvert.ipynb
 ├── 🗁 bin
-│   └── ![SVG Icon](/readme_svg/python.svg) setup.py
+│   ├── ![SVG Icon](/readme_svg/terminal_shell.svg) docker_setup.sh
+│   ├── ![SVG Icon](/readme_svg/terminal_shell.svg) exec_ipynb.sh
+│   ├── ![SVG Icon](/readme_svg/terminal_shell.svg) formatter.sh
+│   └── ![SVG Icon](/readme_svg/terminal_shell.svg) setup.sh
 ├── 🗁 config
-│   ├── ![SVG Icon](/readme_svg/python.svg) \_\_init__.py
+│   ├── ![SVG Icon](/readme_svg/python.svg) __init__.py
 │   └── ![SVG Icon](/readme_svg/python.svg) setting.py
 ├── 🗁 data
 │   └── 🗁 model
 │       ├── 🗁 SegNet
 │       └── 🗁 UNet
 ├── 🗁 module
+│   ├── ![SVG Icon](/readme_svg/python.svg) __init__.py
 │   ├── ![SVG Icon](/readme_svg/python.svg) const.py
 │   ├── ![SVG Icon](/readme_svg/python.svg) image_loader.py
-│   └── ![SVG Icon](/readme_svg/python.svg) \_\_init__.py
+│   └── ![SVG Icon](/readme_svg/python.svg) tissue_analysis.py
+├── 🗁 readme_svg
+│   ├── docker.svg
+│   ├── md_file.svg
+│   ├── python.svg
+│   ├── terminal_shell.svg
+│   └── text.svg
+├── 🗁 result
+│   ├── 🗁 services
+│   │   └── ![SVG Icon](/readme_svg/python.svg) rough_and_fine_image_analysis_epoch_9px.nbconvert.ipynb
+│   └── ![SVG Icon](/readme_svg/python.svg) unet_command_result.nbconvert.ipynb
 ├── ![SVG Icon](/readme_svg/docker.svg) Dockerfile
-├──![SVG Icon](/readme_svg/md_file.svg)README.md
+├── ![SVG Icon](/readme_svg/md_file.svg) README.md
+├── ![SVG Icon](/readme_svg/text.svg) requirements.sample.txt
 ├── ![SVG Icon](/readme_svg/text.svg) requirements.txt
-├── ![SVG Icon](/readme_svg/terminal_shell.svg) exec_ipynb.sh
-└── ![SVG Icon](/readme_svg/terminal_shell.svg) setup.sh
+└── ![SVG Icon](/readme_svg/python.svg) setup.py
 </pre>
-12 directories, 27 files
+13 directories, 28 files
 
 ## 環境構築
 機械学習ライブラリにPyTorchを使用しているためGPUが必須.
 
 ### データ準備
 
-`/data`直下に以下のような構造でimgディレクトリを用意する
+`/data`直下に以下のような構造でimgディレクトリを用意する.
 <pre>
 ├── 🗁 data
 │   ├── 🗁 img(`img`には`config/setting.py`内の`const.TRAIN_DIR`の値を入れる)
