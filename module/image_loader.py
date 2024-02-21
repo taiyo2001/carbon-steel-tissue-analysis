@@ -8,8 +8,12 @@ import albumentations as alb
 from albumentations.pytorch import ToTensorV2
 from typing import Optional, Tuple
 
+
 def get_train_transform(
-    image_height: int, image_width: int, horizontal_flip: float = 0.25, vertical_flip: float = 0.25
+    image_height: int,
+    image_width: int,
+    horizontal_flip: float = 0.25,
+    vertical_flip: float = 0.25,
 ) -> alb.Compose:
     """
     Returns the image data augmentation transformation for training.
@@ -46,6 +50,7 @@ def get_train_transform(
         ]
     )
 
+
 class LoadDataSet(Dataset):
     """
     Dataset class for loading images and masks.
@@ -67,7 +72,7 @@ class LoadDataSet(Dataset):
         path: str,
         image_height: int,
         image_width: int,
-        transform: Optional[callable] = None
+        transform: Optional[callable] = None,
     ) -> None:
         self.path = path
         folders = os.listdir(path)
@@ -96,9 +101,7 @@ class LoadDataSet(Dataset):
         img = io.imread(image_path)
         img = self.conv_2D_to_3Darray(img)
 
-        mask = self.get_mask(
-            mask_folder, self.image_height, self.image_width
-        )
+        mask = self.get_mask(mask_folder, self.image_height, self.image_width)
 
         # 前処理をするためにひとつにまとめる
         augmented = self.transforms(image=img, mask=mask)

@@ -3,7 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import Union
 
-def display_input_label_pre_image(input: np.ndarray, label: np.ndarray, predicted: np.ndarray, name: str) -> None:
+
+def display_input_label_pre_image(
+    input: np.ndarray, label: np.ndarray, predicted: np.ndarray, name: str
+) -> None:
     """
     Display image analysis results.
 
