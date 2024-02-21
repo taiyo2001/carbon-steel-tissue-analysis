@@ -1,4 +1,16 @@
 class _const(object):
+    """
+    Class for creating constants that cannot be rebound.
+
+    Raises:
+    - ConstError: If attempting to rebind a constant.
+
+    Usage:
+    Constants can be defined as class attributes.
+    Example:
+    _const.PI = 3.14
+    """
+
     class ConstError(TypeError):
         def __init__(self, name):
             self.name = name
