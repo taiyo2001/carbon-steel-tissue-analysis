@@ -5,6 +5,7 @@ from PIL import Image
 import numpy as np
 from torch.utils.data import Dataset
 import albumentations as alb
+from albumentations.pytorch import ToTensorV2
 from typing import Optional, Tuple
 
 def get_train_transform(
@@ -41,7 +42,7 @@ def get_train_transform(
             alb.HorizontalFlip(p=horizontal_flip),
             # 垂直フリップ
             alb.VerticalFlip(p=vertical_flip),
-            alb.pytorch.ToTensorV2(),
+            ToTensorV2(),
         ]
     )
 
