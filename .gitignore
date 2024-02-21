@@ -1,11 +1,9 @@
 # result(result sample fileは追跡対象)
 /result/
 !/result/unet_command_result.nbconvert.ipynb
+!/result/services/rough_and_fine_image_analysis_epoch_9px.nbconvert.ipynb
 /data/img*/**
 !/data/**/.gitignore
-# !.gitkeep
-# !/data/**/.gitkeep
-
 
 # cache
 .cache
