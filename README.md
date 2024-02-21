@@ -1,8 +1,7 @@
 # carbon-steel-tissue-analysis
-フェライト・パーライト組織を有する炭素鋼の深層学習によるセグメンテーション
+深層学習によるフェライト・パーライト組織のセグメンテーションを用いた組織解析
 
-## 研究目的
-深層学習によるセグメンテーションによってフェライト・パーライト組織を有する炭素鋼の組織識別から組織情報を抽出する.
+Analysis of ferrite-pearlite microstructure using deep learning segmentation
 
 ## フォルダー構造
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-9JzIyL4wS5E9T6XvfD0ySc1JC63B4r1mOtL4fFv3Eg==" crossorigin="anonymous">
@@ -33,17 +32,17 @@
 ├── ![SVG Icon](/readme_svg/terminal_shell.svg) exec_ipynb.sh
 └── ![SVG Icon](/readme_svg/terminal_shell.svg) setup.sh
 </pre>
-9 directories, 14 files
+12 directories, 27 files
 
 ## 環境構築
-### Docker
+機械学習ライブラリにPyTorchを使用しているためGPUが必須.
 
-データの準備
+### データ準備
 
 `/data`直下に以下のような構造でimgディレクトリを用意する
 <pre>
 ├── 🗁 data
-│   ├── 🗁 img(config/setting.pyに記述したディレクトリ名)
+│   ├── 🗁 img(`img`には`config/setting.py`内の`const.TRAIN_DIR`の値を入れる)
 │   │   ├── 🗁 images ─...
 │   │   └── 🗁 masks  ─...
 │   └─── 🗁 model
@@ -51,27 +50,15 @@
 │       └── 🗁 UNet
 </pre>
 
-Build
+### Docker
+Build & Running Docker Container
 ```
-docker build -t [name] .
+sh bin/docker_setup.sh
 ```
-
-立ち上げ
+コンテナ内に入ったらaliasを登録するために毎回以下を実行.
 ```
-docker start [name]
-docker container exec -it [name] bash
-cd /root
 source bin/setup.sh
 ```
-
-終了
-```
-exit
-docker stop [name]
-```
-
-### Local
-`.tool_versions`でpythonのバージョンを確認し、各自で構築.
 
 ## Jupyter Notebookの実行方法
 `/app`内のJupyter Notebookを実行するときは、APP_PATHで以下を叩くと実行結果ファイル`/result/${file_name}_epoch_${epochs}.nbconvert.ipynb`が出力される.
@@ -80,21 +67,19 @@ ipynb ${file_name} ${epochs}
 ```
 ※第2引数は省略可
 
-ex. 300epochs分を回す`/app/unet_command.ipynb`を実行するとき
-
-実行コマンド
+ex. 300epochs分を回す`/app/unet_command.ipynb`を実行時は以下を実行.
 ```
 ipynb unet_command 300
 ```
 出力ファイル：`/result/unet_command_epoch_300.nbconvert.ipynb`
 
 ## フォーマットの実行方法
-フォーマットチェック
+Check Linter
 ```
 black ./ --check
 ```
 
-フォーマット実行
+Exec Linter
 ```
 black ./
 ```
