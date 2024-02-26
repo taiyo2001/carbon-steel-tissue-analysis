@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# XXX: exec with source command. If you don't, you may get an error
+# NOTE: exec with source command. If you don't, you may get an error
 echo "== start setup =="
 
 CURRENT_DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
